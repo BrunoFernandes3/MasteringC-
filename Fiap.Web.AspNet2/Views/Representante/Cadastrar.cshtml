@@ -1,0 +1,32 @@
+﻿@model RepresentanteModel
+@{
+}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="well">
+                <h2>Representante - Cadastrar</h2>
+
+                <form asp-controller="Representante" asp-action="Cadastrar">
+
+                    <div class="form-group">
+                        <label class="control-label" asp-for="NomeRepresentante"></label>
+                        <input class="form-control col-5" asp-for="NomeRepresentante"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" asp-for="Email"></label>
+                        <input class="form-control col-5" asp-for="Email" >
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" asp-for="DataNascimento"></label>
+                        <input class="form-control col-5" value="" asp-for="DataNascimento"/>
+                    </div>
+                    <a asp-controller="Representante" asp-action="Index" class="btn btn-default btn-lg">Cancelar</a>
+
+                    <button type="submit" class="btn btn-primary btn-lg">Gravar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
