@@ -19,6 +19,8 @@ namespace Fiap.Web.AspNet2.Models
         [DataType(DataType.Date)]
         public DateTime DataNascimento { get; set; }
 
+        public IList<ClienteModel> Clientes { get; set; }
+
         public RepresentanteModel()
         {
 

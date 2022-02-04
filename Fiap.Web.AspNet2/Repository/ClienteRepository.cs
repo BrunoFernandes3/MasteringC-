@@ -1,5 +1,6 @@
 ﻿using Fiap.Web.AspNet2.Data;
 using Fiap.Web.AspNet2.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,11 @@ namespace Fiap.Web.AspNet2.Repository
 
         public ClienteModel FindById(int id)
         {
-            return dataContext.Cliente.Find(id);
+            var clienteModel = dataContext.Cliente
+                .Include(c => c.Representante)
+                .SingleOrDefault(c => c.ClienteId == id);
+
+            return clienteModel;
         }
 
         public void Insert(ClienteModel clienteModel)
@@ -41,12 +46,6 @@ namespace Fiap.Web.AspNet2.Repository
             dataContext.SaveChanges();
         }
 
-        public void Delete(int id)
-        {
-            var cliente = new ClienteModel();
-            cliente.ClienteId = id;
-            Delete(cliente);
-        }
 
         public void Update(ClienteModel clienteModel)
         {

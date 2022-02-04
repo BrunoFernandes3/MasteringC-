@@ -69,9 +69,8 @@ namespace Fiap.Web.AspNet2.Controllers
         [HttpGet]
         public IActionResult Detalhe(int id)
         {
-            IList<RepresentanteModel> representantes = representanteRepository.FindAll();
-            ViewBag.Representantes = new SelectList(representantes,"RepresentanteId","NomeRepresentante");
-            return View(clienteRepository.FindById(id));
+            var clienteModel = clienteRepository.FindById(id);
+            return View(clienteModel);
         }
     }
 }

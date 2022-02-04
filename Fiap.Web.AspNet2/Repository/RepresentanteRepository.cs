@@ -1,5 +1,6 @@
 ﻿using Fiap.Web.AspNet2.Data;
 using Fiap.Web.AspNet2.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,13 @@ namespace Fiap.Web.AspNet2.Repository
         public RepresentanteModel FindById(int id)
         {
             return context.Representante.Find(id);
+        }
+
+        public RepresentanteModel FindByIdWithClientes(int id)
+        {
+            return context.Representante
+                .Include(r => r.Clientes)
+                .SingleOrDefault(r => r.RepresentanteId == id);
         }
 
         public void Insert(RepresentanteModel representanteModel)

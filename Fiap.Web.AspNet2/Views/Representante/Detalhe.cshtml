@@ -20,6 +20,51 @@
                         <label class="control-label" asp-for="DataNascimento"></label>
                         <input class="form-control col-5" asp-for="DataNascimento" readonly="readonly"/>
                     </div>
+                    <div class="form-group">
+                    @if(@Model.Clientes.Count() > 0)
+                    {
+                        <p>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                        </p>
+                        <h4 class="alert alert-dark">Lista de clientes associados</h4>
+                        <table class="table table-bordered">
+                            <thead>
+                             <tr>
+                                <th>Id do cliente</th>
+                                <th>Nome do Cliente</th>
+                            </tr>
+                            </thead>
+                        
+
+                        @foreach(var item in @Model.Clientes)
+                        {   
+                            <tbody>
+                                <tr>
+                                    <td>@item.ClienteId</td>
+                                    <td>@item.Nome</td>
+                                </tr>
+                            </tbody>
+                        }
+                        </table>
+                    }
+                    else
+                    {
+                         <p>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                          </p>
+                        <div class="alert alert-warning">
+                            <h4>Não há clientes associados!</h4>
+                        </div>
+                    }
+
+
+                    </div>
 
                     <a  asp-controller="Representante" asp-action="Index" class="btn btn-primary btn-lg">Voltar</a>
             </div>

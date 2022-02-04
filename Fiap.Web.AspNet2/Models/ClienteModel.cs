@@ -30,7 +30,7 @@ namespace Fiap.Web.AspNet2.Models
         public int RepresentanteId { get; set; }
 
         [ForeignKey("RepresentanteId")]
-        public RepresentanteModel RepresentanteModel { get; set; }
+        public RepresentanteModel Representante { get; set; }
 
         public ClienteModel()
         {

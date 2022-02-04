@@ -36,7 +36,7 @@ namespace Fiap.Web.AspNet2.Controllers
         [HttpGet]
         public IActionResult Detalhe(int id)
         {
-            var representante = representanteRepository.FindById(id);
+            var representante = representanteRepository.FindByIdWithClientes(id);
             return View(representante);
 
         }
