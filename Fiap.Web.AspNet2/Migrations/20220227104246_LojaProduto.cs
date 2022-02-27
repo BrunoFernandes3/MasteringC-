@@ -2,7 +2,7 @@
 
 namespace Fiap.Web.AspNet2.Migrations
 {
-    public partial class ProdutoLoja : Migration
+    public partial class LojaProduto : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -10,26 +10,26 @@ namespace Fiap.Web.AspNet2.Migrations
                 name: "Loja",
                 columns: table => new
                 {
-                    ProdutoId = table.Column<int>(type: "int", nullable: false)
+                    LojaId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    NomeProduto = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    LojaNome = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Loja", x => x.ProdutoId);
+                    table.PrimaryKey("PK_Loja", x => x.LojaId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Produto",
                 columns: table => new
                 {
-                    LojaId = table.Column<int>(type: "int", nullable: false)
+                    ProdutoId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    NomeLoja = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    ProdutoNome = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Produto", x => x.LojaId);
+                    table.PrimaryKey("PK_Produto", x => x.ProdutoId);
                 });
 
             migrationBuilder.CreateTable(
@@ -48,13 +48,13 @@ namespace Fiap.Web.AspNet2.Migrations
                         name: "FK_ProdutoLoja_Loja_LojaId",
                         column: x => x.LojaId,
                         principalTable: "Loja",
-                        principalColumn: "ProdutoId",
+                        principalColumn: "LojaId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ProdutoLoja_Produto_ProdutoId",
                         column: x => x.ProdutoId,
                         principalTable: "Produto",
-                        principalColumn: "LojaId",
+                        principalColumn: "ProdutoId",
                         onDelete: ReferentialAction.Cascade);
                 });
 

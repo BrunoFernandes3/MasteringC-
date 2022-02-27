@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fiap.Web.AspNet2.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220206203901_ProdutoLoja")]
-    partial class ProdutoLoja
+    [Migration("20220227104246_LojaProduto")]
+    partial class LojaProduto
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -79,15 +79,15 @@ namespace Fiap.Web.AspNet2.Migrations
 
             modelBuilder.Entity("Fiap.Web.AspNet2.Models.LojaModel", b =>
                 {
-                    b.Property<int>("ProdutoId")
+                    b.Property<int>("LojaId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("NomeProduto")
+                    b.Property<string>("LojaNome")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ProdutoId");
+                    b.HasKey("LojaId");
 
                     b.ToTable("Loja");
                 });
@@ -116,15 +116,15 @@ namespace Fiap.Web.AspNet2.Migrations
 
             modelBuilder.Entity("Fiap.Web.AspNet2.Models.ProdutoModel", b =>
                 {
-                    b.Property<int>("LojaId")
+                    b.Property<int>("ProdutoId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("NomeLoja")
+                    b.Property<string>("ProdutoNome")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("LojaId");
+                    b.HasKey("ProdutoId");
 
                     b.ToTable("Produto");
                 });

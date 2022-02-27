@@ -1,0 +1,36 @@
+﻿@model LojaModel
+@{
+}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="well">
+                <h2>Loja - Cadastrar</h2>
+
+                <form asp-controller="Loja" asp-action="Cadastrar">
+
+                    <div class="form-group">
+                        <label class="control-label" asp-for="LojaNome"></label>
+                        <input class="form-control col-5" asp-for="LojaNome"/>
+                    </div>
+                    
+                    @*<div class="form-group">
+                        <label class="contrzl-label">Representante</label>
+
+                        <Select class="form-control col-5" asp-for="ProdutoLoja">
+                         <option>Selecione</option>
+                         @foreach (var item in @ViewBag.Lojas)
+                            {
+                                <option value="@item.LojaId">@item.LojaNome</option>
+                            }
+                        </Select>
+                    </div>*@
+                    <a asp-controller="Loja" asp-action="Index" class="btn btn-default btn-lg">Cancelar</a>
+
+                    <button type="submit" class="btn btn-primary btn-lg">Gravar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

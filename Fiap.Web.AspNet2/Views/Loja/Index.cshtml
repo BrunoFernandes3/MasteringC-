@@ -1,0 +1,56 @@
+﻿@model IList<LojaModel>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+
+            <h1>Lojas</h1>
+            @{
+                var mensagem = (String)@TempData["mensagemSucesso"];
+                if (( ! String.IsNullOrEmpty(mensagem)))
+                    {
+                        <div class="alert alert-warning" role="alert">
+                        <h4>@mensagem</h4>
+                        </div>
+                    }
+                
+            }
+            
+            @if(@Model.Count() > 0){
+            <table class="table table-striped" border="1" cellspacing="0" cellpadding="0">
+                <thead>
+                    <tr>
+                        <th data-field="id">Id</th>
+                        <th data-field="name">Nome</th>
+                        <th class="actions" width="220">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                
+                    @foreach (var item in @Model)
+                     {
+                            <tr>
+                                <td>@item.LojaId</td>
+                                <td>@item.LojaNome</td>
+                                <td>
+                                    <a class="btn btn-dark btn-sm" asp-controller="Loja" asp-action="Detalhe" asp-route-id="@item.LojaId" >Detalhes</a>
+                                    <a class="btn btn-warning btn-sm" asp-controller="Loja" asp-action="Editar" asp-route-id="@item.LojaId">Editar</a>
+                                    <a class="btn btn-danger btn-sm" asp-controller="Loja" asp-action="Excluir" asp-route-id="@item.LojaId">Excluir</a>
+                                </td>
+                            </tr>
+                     }
+                </tbody>
+            </table>
+            }
+            else{
+                <div class="alert alert-warning" role="alert">
+                     <h2>Sem lojas cadastradas.</h2>
+                </div>
+            }
+            <p class="toolbar">
+                <a class="create btn btn-primary" asp-controller="Loja" asp-action="Cadastrar">Nova Loja</a>
+            </p>
+        </div>
+    </div>
+</div>
+

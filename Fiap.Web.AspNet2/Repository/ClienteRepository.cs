@@ -20,7 +20,7 @@ namespace Fiap.Web.AspNet2.Repository
         public IList<ClienteModel> FindAll()
         {
             Console.WriteLine("Validando acesso ao FindAll()");
-            return dataContext.Cliente.ToList(); ;
+            return dataContext.Cliente.ToList(); 
         }
 
         public ClienteModel FindById(int id)

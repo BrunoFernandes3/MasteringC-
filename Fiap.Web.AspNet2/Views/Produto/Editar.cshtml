@@ -1,0 +1,39 @@
+﻿@using Fiap.Web.AspNet2.Views.ViewModel
+@model ProdutoLojaViewModel
+@{
+}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="well">
+                <h2>Produto - Editar</h2>
+
+                <form asp-controller="Produto" asp-action="Editar">
+                    <input asp-for="Produto.ProdutoId" />
+                    <div class="form-group">
+                        <label class="control-label" asp-for="Produto.ProdutoNome"></label>
+                        <input class="form-control col-5" asp-for="Produto.ProdutoNome" />
+                    </div>
+                    <div class="form-group">
+                        @foreach(var item in @ViewBag.Lojas)
+                         {
+                            if (item.Check)
+                            {
+                                <input type="checkbox" value="@item.LojaId" name="LojaId" checked /> @item.LojaNome<br/>
+                            }
+                            else
+                            {
+                                <input type="checkbox" value="@item.LojaId" name="LojaId"  /> @item.LojaNome<br/>
+                            }
+
+                         }
+                    </div>
+                    <a asp-controller="Produto" asp-action="Index" class="btn btn-default btn-lg">Cancelar</a>
+
+                    <button type="submit" class="btn btn-primary btn-lg">Gravar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
