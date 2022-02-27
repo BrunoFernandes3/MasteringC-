@@ -15,6 +15,12 @@ namespace Fiap.Web.AspNet2.Data
 
         public DbSet<ClienteModel> Cliente { get; set; }
 
+        public DbSet<LojaModel> Loja { get; set; }
+
+        public DbSet<ProdutoModel> Produto { get; set; }
+
+        public DbSet<ProdutoLojaModel> ProdutoLoja  { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if(optionsBuilder.IsConfigured == false)
