@@ -1,4 +1,5 @@
-﻿@model RepresentanteModel
+﻿@using Fiap.Web.AspNet2.Views.ViewModel
+@model RepresentanteViewModel
 @{
 }
 <div class="container">
@@ -21,6 +22,7 @@
                         <input class="form-control col-5" asp-for="DataNascimento" readonly="readonly"/>
                     </div>
                     <div class="form-group">
+
                     @if(@Model.Clientes.Count() > 0)
                     {
                         <p>

@@ -1,5 +1,6 @@
 ﻿using Fiap.Web.AspNet2.Models;
 using Fiap.Web.AspNet2.Repository;
+using Fiap.Web.AspNet2.Repository.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -11,19 +12,20 @@ namespace Fiap.Web.AspNet2.Controllers
 {
     public class ClienteController : Controller
     {
-        private readonly ClienteRepository clienteRepository;
-        private readonly RepresentanteRepository representanteRepository;
+        private readonly IClienteRepository _clienteRepository;
+        private readonly IRepresentanteRepository _representanteRepository;
 
-        public ClienteController()
+        public ClienteController(IClienteRepository clienteRepository, IRepresentanteRepository representanteRepository)
         {
-            clienteRepository = new ClienteRepository();   
-            representanteRepository = new RepresentanteRepository();
+            _clienteRepository = clienteRepository;
+            //representanteRepository = new RepresentanteRepository();
+            _representanteRepository = representanteRepository;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            IList<ClienteModel> cliente = clienteRepository.FindAll();
+            IList<ClienteModel> cliente = _clienteRepository.FindAll();
             Console.WriteLine("Validando acesso ao controller");
             return View(cliente);
         }
@@ -31,29 +33,29 @@ namespace Fiap.Web.AspNet2.Controllers
         [HttpGet]
         public IActionResult Cadastrar()
         {
-            IList<RepresentanteModel> representantes = representanteRepository.FindAll();
+            IList<RepresentanteModel> representantes = _representanteRepository.FindAll();
             ViewBag.Representantes = representantes;
             return View(new ClienteModel());
         }
         [HttpPost]
         public IActionResult Cadastrar(ClienteModel clienteModel)
         {
-            clienteRepository.Insert(clienteModel);
+            _clienteRepository.Insert(clienteModel);
             TempData["mensagemSucesso"] = $"Cliente {clienteModel.Nome} cadastrado com sucesso.";
             return RedirectToAction("Index");
         }
         [HttpGet]
         public IActionResult Editar(int id)
         {
-            IList<RepresentanteModel> representantes = representanteRepository.FindAll();
+            IList<RepresentanteModel> representantes = _representanteRepository.FindAll();
             ViewBag.Representantes = representantes;
-            ClienteModel clienteModel = clienteRepository.FindById(id);
+            ClienteModel clienteModel = _clienteRepository.FindById(id);
             return View(clienteModel);
         }
         [HttpPost]
         public IActionResult Editar(ClienteModel clienteModel)
         {
-            clienteRepository.Update(clienteModel);
+            _clienteRepository.Update(clienteModel);
             TempData["mensagemSucesso"] = $"Cliente {clienteModel.Nome} editado com sucesso.";
             return RedirectToAction("Index");
 
@@ -61,15 +63,15 @@ namespace Fiap.Web.AspNet2.Controllers
         [HttpGet]
         public IActionResult Excluir(int id)
         {
-            var clienteModel = clienteRepository.FindById(id);
+            var clienteModel = _clienteRepository.FindById(id);
             TempData["mensagemSucesso"] = $"Cliente {clienteModel.Nome} excluído com sucesso.";
-            clienteRepository.Delete(clienteModel);
+            _clienteRepository.Delete(clienteModel);
             return RedirectToAction("Index");
         }
         [HttpGet]
         public IActionResult Detalhe(int id)
         {
-            var clienteModel = clienteRepository.FindById(id);
+            var clienteModel = _clienteRepository.FindById(id);
             return View(clienteModel);
         }
     }

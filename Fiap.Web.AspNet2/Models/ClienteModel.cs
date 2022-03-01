@@ -57,5 +57,11 @@ namespace Fiap.Web.AspNet2.Models
         {
             RepresentanteId = representanteId;
         }
+
+        public ClienteModel(int clienteId, string nome)
+        {
+            ClienteId = clienteId;
+            Nome = nome;
+        }
     }
 }

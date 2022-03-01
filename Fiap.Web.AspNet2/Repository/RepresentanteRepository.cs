@@ -1,5 +1,6 @@
 ﻿using Fiap.Web.AspNet2.Data;
 using Fiap.Web.AspNet2.Models;
+using Fiap.Web.AspNet2.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,12 +8,12 @@ using System.Linq;
 
 namespace Fiap.Web.AspNet2.Repository
 {
-    public class RepresentanteRepository
+    public class RepresentanteRepository : IRepresentanteRepository
     {
-        private readonly DataContext context;
-        public RepresentanteRepository()
+        private readonly DataContext _context;
+        public RepresentanteRepository(DataContext dataContext)
         {
-            context = new DataContext();
+            _context = dataContext;
         }
 
         public IList<RepresentanteModel> FindAll()
@@ -23,37 +24,37 @@ namespace Fiap.Web.AspNet2.Repository
             //var lista = context.Representante.Where(r => r.RepresentanteId == 1).ToList(); 
             //Operadores Lógicos podem ser utilizados junto com o LINQ
 
-            return context.Representante.ToList();
+            return _context.Representante.ToList();
         }
-
+ 
         public RepresentanteModel FindById(int id)
         {
-            return context.Representante.Find(id);
+            return _context.Representante.Find(id);
         }
 
         public RepresentanteModel FindByIdWithClientes(int id)
         {
-            return context.Representante
+            return _context.Representante
                 .Include(r => r.Clientes)
                 .SingleOrDefault(r => r.RepresentanteId == id);
         }
 
         public void Insert(RepresentanteModel representanteModel)
         {
-            context.Representante.Add(representanteModel);
-            context.SaveChanges();
+            _context.Representante.Add(representanteModel);
+            _context.SaveChanges();
         }
 
         public void Update(RepresentanteModel representanteModel)
         {
-            context.Representante.Update(representanteModel);
-            context.SaveChanges();
+            _context.Representante.Update(representanteModel);
+            _context.SaveChanges();
         }
 
         public void Delete(RepresentanteModel representanteModel)
         {
-            context.Representante.Remove(representanteModel);
-            context.SaveChanges();
+            _context.Representante.Remove(representanteModel);
+            _context.SaveChanges();
         }
 
         public void  Delete (int id)

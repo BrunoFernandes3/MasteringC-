@@ -1,29 +1,30 @@
 ﻿using Fiap.Web.AspNet2.Data;
 using Fiap.Web.AspNet2.Models;
+using Fiap.Web.AspNet2.Repository.Interfaces;
 using Fiap.Web.AspNet2.Views.ViewModel;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Fiap.Web.AspNet2.Repository
+namespace Fiap.Web.AspNet2.Repository 
 {
-    public class ProdutoRepository
+    public class ProdutoRepository : IProdutoRepository
     {
-        private readonly DataContext dataContext;
+        private readonly DataContext _dataContext;
 
-        public ProdutoRepository()
+        public ProdutoRepository(DataContext dataContext)
         {
-            dataContext = new DataContext();
+            _dataContext = dataContext;
         }
 
         public List<ProdutoModel> FindAll()
         {
-            return dataContext.Produto.ToList();
+            return _dataContext.Produto.ToList();
         }
 
         public ProdutoModel FindById(int id)
         {
-            var produto = dataContext.Produto
+            var produto = _dataContext.Produto
                 .Include(p => p.ProdutoLoja)
                 .ThenInclude(l => l.Loja)
                 .SingleOrDefault(p => p.ProdutoId == id);
@@ -31,12 +32,12 @@ namespace Fiap.Web.AspNet2.Repository
         }
         public ProdutoLojaModel FindById2(int id)
         {
-            return dataContext.ProdutoLoja.Find(id);
+            return _dataContext.ProdutoLoja.Find(id);
         }
         public void Insert(ProdutoModel produtoModel)
         {
-            dataContext.Produto.Add(produtoModel);
-            dataContext.SaveChanges();
+            _dataContext.Produto.Add(produtoModel);
+            _dataContext.SaveChanges();
         }
 
         public void Update(ProdutoModel produtoModel)
@@ -45,16 +46,16 @@ namespace Fiap.Web.AspNet2.Repository
             produtoAtual.ProdutoNome = produtoModel.ProdutoNome;
             produtoAtual.ProdutoLoja = produtoModel.ProdutoLoja;
 
-            dataContext.Update(produtoAtual);
-            dataContext.SaveChanges();
+            _dataContext.Update(produtoAtual);
+            _dataContext.SaveChanges();
         }
 
         public void Delete(int id)
         {
             var produto = new ProdutoModel();
             produto.ProdutoId = id;
-            dataContext.Produto.Remove(produto);
-            dataContext.SaveChanges();
+            _dataContext.Produto.Remove(produto);
+            _dataContext.SaveChanges();
         }
     }
 }

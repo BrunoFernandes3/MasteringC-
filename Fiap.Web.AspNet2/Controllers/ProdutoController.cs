@@ -1,5 +1,6 @@
 ﻿using Fiap.Web.AspNet2.Models;
 using Fiap.Web.AspNet2.Repository;
+using Fiap.Web.AspNet2.Repository.Interfaces;
 using Fiap.Web.AspNet2.Views.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,32 +11,32 @@ namespace Fiap.Web.AspNet2.Controllers
 {
     public class ProdutoController : Controller
     {
-        private readonly ProdutoRepository produtoRepository;
-        private readonly LojaRepository lojaRepository;
+        private readonly IProdutoRepository _produtoRepository;
+        private readonly ILojaRepository _lojaRepository;
 
-        public ProdutoController()
+        public ProdutoController(IProdutoRepository produtoRepository, ILojaRepository lojaRepository)
         {
-            produtoRepository = new ProdutoRepository();
-            lojaRepository = new LojaRepository();
+            _produtoRepository = produtoRepository;
+            _lojaRepository = lojaRepository;
         }
         [HttpGet]
         public IActionResult Index()
         {
-            var produto = produtoRepository.FindAll();
+            var produto = _produtoRepository.FindAll();
             return View(produto);
         }
         [HttpGet]
         public IActionResult Detalhe(int id)
         {
-            var produto = produtoRepository.FindById(id);
+            var produto = _produtoRepository.FindById(id);
             return View(produto);
         }
         [HttpGet]
         public IActionResult Editar(int id) 
         {
-            var lista = lojaRepository.FindAll();
+            var lista = _lojaRepository.FindAll();
             var produtoVM = new ProdutoLojaViewModel();
-            var produtoModel = produtoRepository.FindById(id);
+            var produtoModel = _produtoRepository.FindById(id);
             produtoVM.Produto = produtoModel;
             produtoVM.LojaId = produtoModel.ProdutoLoja.Select( l => l.LojaId).ToList();
             foreach(var item in lista)
@@ -69,7 +70,7 @@ namespace Fiap.Web.AspNet2.Controllers
                 produtoModel.ProdutoLoja.Add(produtoLojaModel);
             }
 
-            produtoRepository.Update(produtoModel);
+            _produtoRepository.Update(produtoModel);
             TempData["mensagemSucesso"] = $"Produto  editado com sucesso";
             return RedirectToAction("Index");
 
@@ -77,7 +78,7 @@ namespace Fiap.Web.AspNet2.Controllers
         [HttpGet]
         public IActionResult Cadastrar()
         {
-            var lista = lojaRepository.FindAll();
+            var lista = _lojaRepository.FindAll();
             ViewBag.Lojas = lista;
             return View();
         }
@@ -98,14 +99,14 @@ namespace Fiap.Web.AspNet2.Controllers
                 produtoModel.ProdutoLoja.Add(produtoLojaModel);
             }
 
-            produtoRepository.Insert(produtoModel);
+            _produtoRepository.Insert(produtoModel);
 
             return RedirectToAction("Index");
         }
         [HttpGet]
         public IActionResult Excluir(int id)
         {
-            produtoRepository.Delete(id);
+            _produtoRepository.Delete(id);
             TempData["mensagemSucesso"] = "Produto excluido com sucesso!";
             return RedirectToAction("Index");
         }

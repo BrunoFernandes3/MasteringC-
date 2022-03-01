@@ -1,5 +1,6 @@
 ﻿using Fiap.Web.AspNet2.Data;
 using Fiap.Web.AspNet2.Models;
+using Fiap.Web.AspNet2.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,25 +8,25 @@ using System.Linq;
 
 namespace Fiap.Web.AspNet2.Repository
 {
-    public class ClienteRepository
+    public class ClienteRepository : IClienteRepository
     {
         //private readonly Object context;
-        private readonly DataContext dataContext;
+        private readonly DataContext _dataContext;
 
-        public ClienteRepository()
+        public ClienteRepository(DataContext dataContext)
         {
-            dataContext = new DataContext();
+            _dataContext = dataContext;
         }
 
         public IList<ClienteModel> FindAll()
         {
             Console.WriteLine("Validando acesso ao FindAll()");
-            return dataContext.Cliente.ToList(); 
+            return _dataContext.Cliente.ToList(); 
         }
 
         public ClienteModel FindById(int id)
         {
-            var clienteModel = dataContext.Cliente
+            var clienteModel = _dataContext.Cliente
                 .Include(c => c.Representante)
                 .SingleOrDefault(c => c.ClienteId == id);
 
@@ -36,21 +37,21 @@ namespace Fiap.Web.AspNet2.Repository
         {
             Console.WriteLine("Validando acesso ao Insert()");
 
-            dataContext.Cliente.Add(clienteModel);
-            dataContext.SaveChanges();
+            _dataContext.Cliente.Add(clienteModel);
+            _dataContext.SaveChanges();
         }
 
         public void Delete(ClienteModel clienteModel)
         {
-            dataContext.Cliente.Remove(clienteModel);
-            dataContext.SaveChanges();
+            _dataContext.Cliente.Remove(clienteModel);
+            _dataContext.SaveChanges();
         }
 
 
         public void Update(ClienteModel clienteModel)
         {
-            dataContext.Update(clienteModel);
-            dataContext.SaveChanges();
+            _dataContext.Update(clienteModel);
+            _dataContext.SaveChanges();
         }
     }
 }

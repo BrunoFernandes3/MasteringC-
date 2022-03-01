@@ -1,40 +1,41 @@
 ﻿using Fiap.Web.AspNet2.Models;
 using Fiap.Web.AspNet2.Repository;
+using Fiap.Web.AspNet2.Repository.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fiap.Web.AspNet2.Controllers
 {
     public class LojaController : Controller
     {
-        private readonly LojaRepository lojaRepository;
+        private readonly ILojaRepository _lojaRepository;
 
-        public LojaController()
+        public LojaController(ILojaRepository lojaRepository)
         {
-            lojaRepository = new LojaRepository();
+            _lojaRepository = lojaRepository;
         }
         [HttpGet]
         public IActionResult Index()
         {
-            var loja = lojaRepository.FindAll();
+            var loja = _lojaRepository.FindAll();
             return View(loja);
         }
         [HttpGet]
         public IActionResult Detalhe(int id)
         {
-            var loja = lojaRepository.FindById(id);
+            var loja = _lojaRepository.FindById(id);
             return View(loja);
         }
         [HttpGet]
         public IActionResult Editar(int id)
         {
-            var loja = lojaRepository.FindById(id);
+            var loja = _lojaRepository.FindById(id);
             //  ViewBag.Lojas = lojaRepository.FindAll();
             return View(loja);
         }
         [HttpPost]
         public IActionResult Editar(LojaModel lojaModel)
         {
-            lojaRepository.Update(lojaModel);
+            _lojaRepository.Update(lojaModel);
             TempData["mensagemSucesso"] = $"Loja  editado com sucesso";
             return RedirectToAction("Index");
         }
@@ -47,14 +48,14 @@ namespace Fiap.Web.AspNet2.Controllers
         [HttpPost]
         public IActionResult Cadastrar(LojaModel lojaModel)
         {
-            lojaRepository.Insert(lojaModel);
+            _lojaRepository.Insert(lojaModel);
             TempData["mensagemSucesso"] = $"Loja {lojaModel.LojaNome} cadastrado com sucesso";
             return RedirectToAction("Index");
         }
         [HttpGet]
         public IActionResult Excluir(int id)
         {
-            lojaRepository.Delete(id);
+            _lojaRepository.Delete(id);
             TempData["mensagemSucesso"] = "Loja excluido com sucesso!";
             return RedirectToAction("Index");
         }

@@ -1,28 +1,29 @@
 ﻿using Fiap.Web.AspNet2.Data;
 using Fiap.Web.AspNet2.Models;
+using Fiap.Web.AspNet2.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Fiap.Web.AspNet2.Repository
 {
-    public class LojaRepository
+    public class LojaRepository : ILojaRepository
     {
-        private readonly DataContext dataContext;
+        private readonly DataContext _dataContext;
 
-        public LojaRepository()
+        public LojaRepository(DataContext dataContext)
         {
-           dataContext = new DataContext();
+           _dataContext = dataContext;
         }
 
         public List<LojaModel> FindAll()
         {
-            return dataContext.Loja.ToList();
+            return _dataContext.Loja.ToList();
         }
         
         public LojaModel FindById(int id)
         {
-            var loja = dataContext.Loja
+            var loja = _dataContext.Loja
                 .Include(l => l.ProdutoLoja)
                 .ThenInclude(p => p.Produto)
                 .SingleOrDefault(l => l.LojaId == id);
@@ -31,21 +32,21 @@ namespace Fiap.Web.AspNet2.Repository
 
         public void Insert(LojaModel lojaModel)
         {
-            dataContext.Loja.Add(lojaModel);
-            dataContext.SaveChanges();
+            _dataContext.Loja.Add(lojaModel);
+            _dataContext.SaveChanges();
         }
 
         public void Update(LojaModel lojaModel)
         {
-            dataContext.Loja.Update(lojaModel);
-            dataContext.SaveChanges();
+            _dataContext.Loja.Update(lojaModel);
+            _dataContext.SaveChanges();
         }
 
         public void Delete(int id) 
         {
             var loja = FindById(id);
-            dataContext.Loja.Remove(loja);
-            dataContext.SaveChanges();
+            _dataContext.Loja.Remove(loja);
+            _dataContext.SaveChanges();
         }
     }
 }

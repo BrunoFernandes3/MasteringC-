@@ -8,6 +8,14 @@ namespace Fiap.Web.AspNet2.Data
 {
     public class DataContext : DbContext
     {
+        public DataContext( DbContextOptions options) : base(options)
+        {
+        }
+
+        public DataContext()
+        {
+        }
+
 
         public DbSet<RepresentanteModel> Representante { get; set; }
 
@@ -17,7 +25,7 @@ namespace Fiap.Web.AspNet2.Data
 
         public DbSet<LojaModel> Loja { get; set; }
 
-        public DbSet<ProdutoModel> Produto { get; set; }
+        public DbSet<ProdutoModel> Produto { get; set; } 
 
         public DbSet<ProdutoLojaModel> ProdutoLoja  { get; set; }
 
