@@ -1,0 +1,41 @@
+﻿@model Fiap.Web.AspNet2.Views.ViewModel.LoginViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<h4>LoginViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <div class="alert-alert-primary">
+            @{
+                string mensagem = (string)TempData["mensagem"];
+                if (!string.IsNullOrWhiteSpace(mensagem))
+                {
+                     <div class="alert-primary">
+                     <h3>@mensagem</h3>
+                     </div>
+                }
+            } 
+        </div>
+        <form asp-action="Login">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Login" class="control-label"></label>
+                <input asp-for="Login" class="form-control" />
+                <span asp-validation-for="Login" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Senha" class="control-label"></label>
+                <input asp-for="Senha" type="password" class="form-control" />
+                <span asp-validation-for="Senha" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Login" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

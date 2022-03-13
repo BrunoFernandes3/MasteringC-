@@ -31,6 +31,12 @@ namespace Fiap.Web.AspNet2
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSession(option => {
+                option.IdleTimeout = TimeSpan.FromMinutes(10);
+                option.Cookie.HttpOnly = true;
+                option.Cookie.IsEssential = true;
+            });
+
             services.AddControllersWithViews();
 
             var connectionString = Configuration.GetConnectionString("dataISUrl");
@@ -70,6 +76,9 @@ namespace Fiap.Web.AspNet2
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            app.UseSession();
+
             app.UseStaticFiles();
 
             app.UseRouting();

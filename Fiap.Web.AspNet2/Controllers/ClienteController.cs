@@ -1,6 +1,8 @@
-﻿using Fiap.Web.AspNet2.Models;
+﻿using Fiap.Web.AspNet2.Controllers.Filters;
+using Fiap.Web.AspNet2.Models;
 using Fiap.Web.AspNet2.Repository;
 using Fiap.Web.AspNet2.Repository.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -10,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace Fiap.Web.AspNet2.Controllers
 {
+    [FiapFilter]
     public class ClienteController : Controller
     {
         private readonly IClienteRepository _clienteRepository;
@@ -71,6 +74,13 @@ namespace Fiap.Web.AspNet2.Controllers
         [HttpGet]
         public IActionResult Detalhe(int id)
         {
+            /* var usuarioLogado = HttpContext.Session.GetString("usuarioLogado");
+             if (!string.IsNullOrEmpty(usuarioLogado))
+             {
+                 var clienteModel = _clienteRepository.FindById(id);
+                 return View(clienteModel);
+             }*/
+
             var clienteModel = _clienteRepository.FindById(id);
             return View(clienteModel);
         }
